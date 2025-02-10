@@ -1,0 +1,35 @@
+{
+  "name": "qp-assessment",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "dev": "nodemon src/app.ts",
+    "start": "node dist/app.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "denver",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/express": "^4.17.21",
+    "@types/jsonwebtoken": "^9.0.8",
+    "@types/node": "^22.13.1",
+    "@types/validator": "^13.12.2",
+    "nodemon": "^3.1.9",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "joi": "^17.13.3",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.13.1",
+    "pg-hstore": "^2.3.4",
+    "reflect-metadata": "^0.2.2",
+    "sequelize": "^6.37.5",
+    "sequelize-typescript": "^2.1.6"
+  }
+}
