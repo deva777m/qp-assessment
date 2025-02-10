@@ -10,12 +10,6 @@ const productSchema = Joi.object({
     desc: Joi.string().max(1024).required(),
 });
 
-// Define schema for login
-const loginSchema = Joi.object({
-    email: Joi.string().email().required(),
-    password: Joi.string().min(6).max(10).required(),
-});
-
 const productHandlers = {
     get: async (req: Request, res: Response, next: NextFunction) => {
         try {
@@ -68,7 +62,7 @@ const productHandlers = {
                 throw new AppError("Product already exists", 400);
             }
             
-            // Create a new user
+            // Create a new product
             const newProduct = new Product({...value});
             await newProduct.save();
 
@@ -97,7 +91,7 @@ const productHandlers = {
                 throw new AppError("Product not found", 400);
             }
 
-            // Create a new user
+            // modify products
             existingProduct.name = req.body.name ? req.body.name : existingProduct.name;
             existingProduct.desc = req.body.desc ? req.body.desc : existingProduct.desc;
             await existingProduct.save();

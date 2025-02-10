@@ -13,10 +13,14 @@ app.use(express.json());
 
 import userRoutes from './routes/userRoutes';
 import productRoutes from './routes/productRoutes';
+import inventoryRoutes from './routes/inventoryRoutes';
+import orderRoutes from './routes/orderRoutes';
 
 // routes
 app.use('/user', userRoutes);
 app.use('/products', productRoutes);
+app.use('/inventory', inventoryRoutes);
+app.use('/orders', orderRoutes);
 
 app.get('/', (req, res) => {
     console.log(req.headers);

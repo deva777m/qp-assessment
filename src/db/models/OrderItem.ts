@@ -4,36 +4,47 @@ import {
     Column,
     Model,
     DataType,
-    CreatedAt,
     UpdatedAt,
     ForeignKey,
     BelongsTo,
 } from "sequelize-typescript";
+import Order from "./Order";
 import Product from "./Product";
-import { allow } from "joi";
-import { on } from "events";
 
-interface InventoryAttributes {
+interface OrderItemAttributes {
     id: number;
     product_id: number;
+    order_id: number;
     quantity: number;
 }
 
-interface InventoryCreationAttributes extends Optional<InventoryAttributes, "id"> {}
+interface OrderItemCreationAttributes extends Optional<OrderItemAttributes, "id"> {}
 
 @Table({
-    tableName: "inventory",
+    tableName: "order_items",
     timestamps: true,
-    modelName: "Inventory",
+    modelName: "OrderItem",
 })
 
-export default class Inventory extends Model<InventoryAttributes, InventoryCreationAttributes> {
+export default class OrderItem extends Model<OrderItemAttributes, OrderItemCreationAttributes> {
     @Column({
         type: DataType.INTEGER,
         autoIncrement: true,
         primaryKey: true,
     })
     declare id: number;
+
+    @ForeignKey(() => Order)
+    @Column({
+        type: DataType.INTEGER,
+        allowNull: false,
+    })
+    declare order_id: number;
+
+    @BelongsTo(() => Order, {onDelete: "CASCADE"})
+    declare order: Order;
+
+    
     @ForeignKey(() => Product)
     @Column({
         type: DataType.INTEGER,
@@ -41,7 +52,7 @@ export default class Inventory extends Model<InventoryAttributes, InventoryCreat
     })
     declare product_id: number;
 
-    @BelongsTo(() => Product, {onDelete: "CASCADE"})
+    @BelongsTo(() => Product, {onDelete: "NO ACTION"})
     declare product: Product;
 
     @Column({
@@ -49,9 +60,6 @@ export default class Inventory extends Model<InventoryAttributes, InventoryCreat
         allowNull: false,
     })
     declare quantity: number;
-    
-    @CreatedAt
-    declare createdAt: Date;
 
     @UpdatedAt
     declare updatedAt: Date;
