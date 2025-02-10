@@ -25,6 +25,7 @@ export const jwtAuthenticate = async (req: Request, res: Response, next: NextFun
 };
 
 export const adminOnly = async (req: Request, res: Response, next: NextFunction) => {
+    console.log(req.body);
     if(req.body.role !== 'admin') {
         return res.status(401).json("Unauthorized");
     }

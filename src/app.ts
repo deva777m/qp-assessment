@@ -12,8 +12,11 @@ app.use(express.json());
 //middlewares
 
 import userRoutes from './routes/userRoutes';
+import productRoutes from './routes/productRoutes';
+
 // routes
 app.use('/user', userRoutes);
+app.use('/products', productRoutes);
 
 app.get('/', (req, res) => {
     console.log(req.headers);

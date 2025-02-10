@@ -22,10 +22,10 @@ const loginSchema = Joi.object({
 
 const userHandlers = {
     get: async (req: Request, res: Response, next: NextFunction) => {
-        const id = req.body.user.id;
+        const id = req.body.userId;
         try {
             if(!id) { 
-                throw new AppError("Name is required", 400);
+                throw new AppError("Login is required!", 400);
             }
             // Get the user by id
             const user = await User.findOne({
@@ -34,7 +34,7 @@ const userHandlers = {
                 }
             });
             
-            res.status(200).json(user);
+            res.status(200).json({...user?.dataValues, password: undefined});
         } catch (error) {
             next(error);
         }

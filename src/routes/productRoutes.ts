@@ -1,19 +1,21 @@
-// import { Router } from "express";
-// import handler from "../handlers/productHandler";
+import { Router } from "express";
+import handler from "../handlers/productHandler";
+import { jwtAuthenticate, adminOnly } from "../middlewares/auth";
 
-// const router = Router();
+const router = Router();
 
-// router.get("/", handler.get);
+// admin protected routes
+router.use(jwtAuthenticate);
+router.use(adminOnly);
 
-// router.post("/", handler.post);
+router.get("/", handler.get);
 
-// router.get("/:id", handler.getById);
+router.get("/:id", handler.getById);
 
-// router.patch("/:id", handler.patch);
+router.post("/", handler.post);
 
-// router.delete("/:id", handler.delete);
+router.patch("/", handler.patch);
 
+router.delete("/", handler.delete);
 
-// // router.get("/catch", handler.catch);
-
-// export default router;
+export default router;
