@@ -32,9 +32,8 @@ process.on('unhandledRejection', (error: Error) => {
 app.listen(3000, async () => {
     try {
         console.log('Server is running on http://localhost:3000');
-        await sequelize.authenticate();
-        console.log('Database connected');
         await sequelize.sync();
+        console.log('Database connected!');
     } catch (error) { 
         console.error('Unable to connect to the database:', error);
     }

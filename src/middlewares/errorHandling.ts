@@ -1,7 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import errorHandler from "../utils/ErrorHandler";
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const errorHandling = (err: Error, req: Request, res: Response, next: NextFunction) => {
     console.log('handling error....');
     const error = errorHandler(err);

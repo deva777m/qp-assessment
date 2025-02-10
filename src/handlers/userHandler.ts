@@ -14,6 +14,12 @@ const userSchema = Joi.object({
     password: Joi.string().min(6).max(10).required(),
 });
 
+// Define schema for login
+const loginSchema = Joi.object({
+    email: Joi.string().email().required(),
+    password: Joi.string().min(6).max(10).required(),
+});
+
 const userHandlers = {
     get: async (req: Request, res: Response, next: NextFunction) => {
         const id = req.body.user.id;
@@ -42,6 +48,16 @@ const userHandlers = {
                 throw new AppError(error.details[0].message, 400);
             }
 
+            const existingUser = await User.findOne({
+                where: {
+                    email: value.email
+                }
+            });
+
+            if(existingUser && existingUser.id) {
+                throw new AppError("User already exists", 400);
+            }
+
             // Hash the password
             const hashedPassword = await bcrypt.hash(value.password, 10);
             
@@ -50,8 +66,7 @@ const userHandlers = {
             await newUser.save();
 
             // remove password from the response
-            newUser.password = '';
-            res.status(201).json(newUser);
+            res.status(201).json({...newUser.dataValues, password: undefined});
         } catch (error) {
             next(error);
         }
@@ -60,7 +75,7 @@ const userHandlers = {
     login: async (req: Request, res: Response, next: NextFunction) => {
         try {
             // Validate the request body against the login schema
-            const { error, value } = userSchema.validate(req.body);
+            const { error, value } = loginSchema.validate(req.body);
             if (error) {
                 throw new AppError(error.details[0].message, 400);
             }
@@ -88,7 +103,7 @@ const userHandlers = {
                 throw new AppError("JWT secret is not defined", 500);
             }
 
-            const token = jwt.sign({ id: user.id, email: user.email }, jwtConfig.secret, { expiresIn: '1h' });
+            const token = jwt.sign({ id: user.id, role: user.role }, jwtConfig.secret, { expiresIn: '1h' });
             res.status(200).json({ token });
         } catch (error) {
             next(error);
