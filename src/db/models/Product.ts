@@ -7,7 +7,6 @@ import {
     DataType,
     CreatedAt,
     UpdatedAt,
-    HasMany,
     HasOne,
 } from "sequelize-typescript";
 
@@ -15,6 +14,7 @@ interface ProductAttributes {
     id: number;
     name: string;
     desc: string;
+    price: number;
 }
 
 interface ProductCreationAttributes extends Optional<ProductAttributes, "id"> {}
@@ -23,6 +23,7 @@ interface ProductCreationAttributes extends Optional<ProductAttributes, "id"> {}
     tableName: "products",
     timestamps: true,
     modelName: "Product",
+    paranoid: true,
 })
 
 export default class Product extends Model<ProductAttributes, ProductCreationAttributes> {
@@ -45,6 +46,13 @@ export default class Product extends Model<ProductAttributes, ProductCreationAtt
         allowNull: true,
     })
     declare desc: string;
+
+    @Column({
+        type: DataType.DECIMAL,
+        defaultValue: 0,
+        allowNull: false
+    })
+    declare price: number;
 
     @HasOne(() => Inventory)
     declare inventory: Inventory;

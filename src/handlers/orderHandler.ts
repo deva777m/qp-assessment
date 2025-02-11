@@ -31,7 +31,7 @@ const orderHandlers = {
             // Get the all orders
             const orders = await Order.findAll({
                 include: [{ model: OrderItem,
-                    include: [{ model: Product, attributes: ['name']}] }]
+                    include: [{ model: Product, attributes: ['name', 'price'], paranoid: false}] }]
             });
             
             res.status(200).json(orders);
@@ -52,7 +52,7 @@ const orderHandlers = {
                     id: Number(id)
                 },
                 include: [{ model: OrderItem,
-                    include: [{ model: Product, attributes: ['name']}] }]
+                    include: [{ model: Product, attributes: ['name', 'price'], paranoid: false}] }]
             });
             
             res.status(200).json(order);
@@ -75,7 +75,7 @@ const orderHandlers = {
             const itemIds = items.map((item: IOrderItem) => item.item_id);
             
             // Create a new Order
-            const newOrder = new Order({user_id: value.user_id, status: 'pending'});
+            const newOrder = new Order({user_id: value.user_id, status: 'pending', total: 0});
 
             // run transaction
             await sequelize.transaction(async (t) => {
@@ -93,11 +93,22 @@ const orderHandlers = {
                         transaction: t
                     });
 
+                    // items with product details
+                    const itemsPrices = await Inventory.findAll({
+                        where: {
+                            id: itemIds,
+                            quantity: {[Op.gt] : 0},
+                        },
+                        include: [{model: Product, attributes: ['price']}],
+                        transaction: t
+                    });
+
                     let enoughItems = true;
                     if(inventoryItems.length !== itemIds.length) {
                         throw new AppError("Some items are not available!", 400);
                     }
-
+                    
+                    let total = 0;
                     const orderItems:any = [];
                     inventoryItems.forEach(item => {
                         const requiredQuantity = items.find((i: IOrderItem) => i.item_id === item.id)?.quantity;
@@ -115,6 +126,14 @@ const orderHandlers = {
                         item.quantity -= requiredQuantity;
                     });
 
+                    // update total
+                    itemsPrices.forEach(item => {
+                        if(!item.product) throw new AppError("Some items are not available!", 400);
+                        const requiredQuantity = items.find((i: IOrderItem) => i.item_id === item.id)?.quantity;
+                        total += (item ? item.product.price : 0)*(requiredQuantity);
+                    });
+                      
+
                     if(!enoughItems) {
                         throw new AppError("Some items are not available!", 400);
                     }
@@ -124,7 +143,8 @@ const orderHandlers = {
                     // bulk save order items
                     await OrderItem.bulkCreate(orderItems, {transaction: t});
 
-                    await newOrder.update({status: 'completed'}, {transaction: t});
+                    console.log("total: ", total);
+                    await newOrder.update({status: 'completed', total : total}, {transaction: t});
                 } catch (error) {
                     if (error instanceof Error && error.name === 'SequelizeLockError') {
                         throw new AppError("Some items are not available!", 400);

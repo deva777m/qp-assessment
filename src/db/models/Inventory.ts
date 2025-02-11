@@ -10,8 +10,6 @@ import {
     BelongsTo,
 } from "sequelize-typescript";
 import Product from "./Product";
-import { allow } from "joi";
-import { on } from "events";
 
 interface InventoryAttributes {
     id: number;

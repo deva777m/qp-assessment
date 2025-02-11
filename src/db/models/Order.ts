@@ -17,6 +17,7 @@ interface OrderAttributes {
     id: number;
     user_id: number;
     status: string;
+    total: number;
 }
 
 interface OrderCreationAttributes extends Optional<OrderAttributes, "id"> {}
@@ -53,6 +54,13 @@ export default class Order extends Model<OrderAttributes, OrderCreationAttribute
         allowNull: false,
     })
     declare status: string;
+
+    @Column({
+        type: DataType.DECIMAL,
+        defaultValue: 0,
+        allowNull: false,
+    })
+    declare total: number;
     
     @CreatedAt
     declare createdAt: Date;

@@ -18,4 +18,6 @@ router.patch("/", handler.patch);
 
 router.delete("/", handler.delete);
 
+router.get("/restore/:id", handler.restore);
+
 export default router;

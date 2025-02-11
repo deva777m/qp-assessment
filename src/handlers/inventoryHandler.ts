@@ -20,10 +20,12 @@ const inventoryHandlers = {
                 where: {
                     quantity: {[Op.gt] : 0}
                 },
-                include: Product
+                include: [{model: Product}]
             });
+
+            const filtered = products.filter(p => p.product != null);
             
-            res.status(200).json(products);
+            res.status(200).json(filtered);
         } catch (error) {
             next(error);
         }
@@ -40,10 +42,15 @@ const inventoryHandlers = {
                 where: {
                     id: Number(id)
                 },
-                include: Product
+                include: [{model: Product, paranoid: true}]
             });
             
-            res.status(200).json(product);
+            let response = product;
+            if(!product || !product.product) {
+                response = null;
+            }
+            
+            res.status(200).json(response);
         } catch (error) {
             next(error);
         }
@@ -59,17 +66,27 @@ const inventoryHandlers = {
                 throw new AppError(error.details[0].message, 400);
             }
 
+            const existingProduct = await Product.findOne({
+                where: {
+                    id: value.product_id
+                },
+                paranoid: true
+            });
+
+            if(!existingProduct) {
+                throw new AppError("productId does not exists", 400);
+            }
+
             const existingItem = await Inventory.findOne({
                 where: {
                     product_id: value.product_id
-                },
-                include: Product
+                }
             });
 
             if(existingItem && existingItem.id) {
                 throw new AppError("Item already added!", 400);
             }
-            
+
             // Create a new Item
             const newItem = new Inventory({...value});
             await newItem.save();
@@ -93,10 +110,10 @@ const inventoryHandlers = {
                 where: {
                     id: Number(id)
                 },
-                include: Product
+                include: [{model: Product, paranoid: true}]
             });
 
-            if(!existingItem || !existingItem.id) {
+            if(!existingItem || !existingItem.id || !existingItem.product) {
                 throw new AppError("Product not found", 400);
             }
 
