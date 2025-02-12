@@ -15,7 +15,7 @@ const productHandlers = {
     get: async (req: Request, res: Response, next: NextFunction) => {
         try {
             // Get the all products
-            const products = await Product.findAll();
+            const products = await Product.findAll({order: ["id"]});
             
             res.status(200).json(products);
         } catch (error) {
@@ -169,8 +169,7 @@ const productHandlers = {
                 throw new AppError("Product already available", 400);
             }
 
-            existingProduct.deletedAt = null;
-            await existingProduct.save()
+            await existingProduct.restore();
 
             // remove password from the response
             res.status(200).json('Product restored successfully!');

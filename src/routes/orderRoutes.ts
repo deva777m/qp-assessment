@@ -10,6 +10,6 @@ router.get("/", handler.get);
 
 router.get("/:id", handler.getById);
 
-router.post("/", jwtAuthenticate, adminOnly, handler.post);
+router.post("/", jwtAuthenticate, handler.post);
 
 export default router;

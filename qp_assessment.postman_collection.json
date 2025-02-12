@@ -1,0 +1,439 @@
+{
+	"info": {
+		"_postman_id": "765d133c-63d6-4606-bddd-8c0ea5e66bb8",
+		"name": "qp_assessment",
+		"description": "Grocery Booking API.  \nProducts are groceries, which can be accessed only by admin Role.  \nInventory is accessible to user Role.\n\nUser can place multiple orders.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8651933",
+		"_collection_link": "https://plootus.postman.co/workspace/emailfeature~301d2e44-c73b-44e4-80ca-1595b811c844/collection/8651933-765d133c-63d6-4606-bddd-8c0ea5e66bb8?action=share&source=collection_link&creator=8651933"
+	},
+	"item": [
+		{
+			"name": "user",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzM5MjA0NTMyLCJleHAiOjE3MzkyMDgxMzJ9.VT9V1JSGQmAdwV9gso66B8mE1QBJYbWxLL4qfFivZ0c",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": null,
+									"disabled": true
+								}
+							]
+						},
+						"description": "get loggedIn user details"
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"qp-user3@gmail.com\",\r\n    \"role\": \"user\",\r\n    \"password\" : \"qp-pass3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "qpuser0",
+									"disabled": true
+								},
+								{
+									"key": "password",
+									"value": "qpuser0p",
+									"disabled": true
+								}
+							]
+						},
+						"description": "Create user with particular role"
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"qp-user0@gmail.com\",\r\n    \"password\": \"qp-pass0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/user/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"user",
+								"login"
+							]
+						},
+						"description": "login with email & password"
+					},
+					"response": []
+				}
+			],
+			"description": "User Management:  \nRoles: \"admin\", \"user\"."
+		},
+		{
+			"name": "product",
+			"item": [
+				{
+					"name": "getAll",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjA1MjEwLCJleHAiOjE3MzkyMDg4MTB9.e0-vnjriHKgCdQBy3m2DETuRVSDQKvb3xNvoDSjt0A8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "get all groceries, only admin accessible."
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjA1MjEwLCJleHAiOjE3MzkyMDg4MTB9.e0-vnjriHKgCdQBy3m2DETuRVSDQKvb3xNvoDSjt0A8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/products/3",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products",
+								"3"
+							]
+						},
+						"description": "get individual grocery item"
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjA1MjEwLCJleHAiOjE3MzkyMDg4MTB9.e0-vnjriHKgCdQBy3m2DETuRVSDQKvb3xNvoDSjt0A8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"qp-pro2\",\r\n    \"desc\": \"long desc2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "create grocery item"
+					},
+					"response": []
+				},
+				{
+					"name": "patch",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjA1MjEwLCJleHAiOjE3MzkyMDg4MTB9.e0-vnjriHKgCdQBy3m2DETuRVSDQKvb3xNvoDSjt0A8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"id\" : 1,\r\n    \"name\" : \"qp-pro001\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/products",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							]
+						},
+						"description": "update grocery item"
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjA1MjEwLCJleHAiOjE3MzkyMDg4MTB9.e0-vnjriHKgCdQBy3m2DETuRVSDQKvb3xNvoDSjt0A8",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/products?id=2",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						},
+						"description": "remove grocery item"
+					},
+					"response": []
+				},
+				{
+					"name": "restore",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "restore grocery item if it was removed"
+					},
+					"response": []
+				}
+			],
+			"description": "Groceries.\n\n\\-name, price required."
+		},
+		{
+			"name": "inventory",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/inventory",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inventory"
+							]
+						},
+						"description": "get grocery items and their quantity"
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/inventory/1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inventory",
+								"1"
+							]
+						},
+						"description": "get item by id"
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjEyNTI2LCJleHAiOjE3MzkyMTYxMjZ9.0WqkqS1WwA3qru6cpwjmFSY6foqCCLHMHAKSmHTzsQ8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"product_id\": 1,\r\n    \"quantity\": 40\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inventory",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inventory"
+							]
+						},
+						"description": "create inventory item: assign quantity to grocery item\n\nAccessible to admin Role Only."
+					},
+					"response": []
+				},
+				{
+					"name": "patch",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzM5MjEyNTI2LCJleHAiOjE3MzkyMTYxMjZ9.0WqkqS1WwA3qru6cpwjmFSY6foqCCLHMHAKSmHTzsQ8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 2,\r\n    \"quantity\": 20\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/inventory",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"inventory"
+							]
+						},
+						"description": "update inventory item: assign quantity to grocery item\n\nAdmin Role Only."
+					},
+					"response": []
+				}
+			],
+			"description": "Inventory is acutal available quantity of groceries for sale.  \nAccessible by User Role."
+		},
+		{
+			"name": "orders",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Order details with item details"
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "get order by id"
+					},
+					"response": []
+				},
+				{
+					"name": "post",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"description": "Create order with multiple items from inventory."
+					},
+					"response": []
+				}
+			],
+			"description": "Order details for specific user.\n\nUser Role Accessible."
+		}
+	]
+}

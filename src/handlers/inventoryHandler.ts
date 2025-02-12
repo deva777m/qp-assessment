@@ -20,7 +20,8 @@ const inventoryHandlers = {
                 where: {
                     quantity: {[Op.gt] : 0}
                 },
-                include: [{model: Product}]
+                include: [{model: Product}],
+                order: ['id']
             });
 
             const filtered = products.filter(p => p.product != null);

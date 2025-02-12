@@ -5,6 +5,7 @@ import AppError from '../utils/AppError';
 import Inventory from '../db/models/Inventory';
 import Order from '../db/models/Order';
 import OrderItem from '../db/models/OrderItem';
+import User from '../db/models/User';
 import sequelize from '../db/connect';
 import { Op } from 'sequelize';
 
@@ -30,8 +31,11 @@ const orderHandlers = {
         try {
             // Get the all orders
             const orders = await Order.findAll({
-                include: [{ model: OrderItem,
-                    include: [{ model: Product, attributes: ['name', 'price'], paranoid: false}] }]
+                include: [
+                    {model: User, where: {id: req.body.userId}, attributes: ['email']},
+                    { model: OrderItem,
+                        include: [{ model: Product, attributes: ['name', 'price'], paranoid: false}]
+                    }]
             });
             
             res.status(200).json(orders);
@@ -51,7 +55,9 @@ const orderHandlers = {
                 where: {
                     id: Number(id)
                 },
-                include: [{ model: OrderItem,
+                include: [
+                    {model: User, where: {id: req.body.userId}, attributes: ['email']},
+                    { model: OrderItem,
                     include: [{ model: Product, attributes: ['name', 'price'], paranoid: false}] }]
             });
             

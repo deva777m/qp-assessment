@@ -6,7 +6,9 @@
     "dev": "nodemon src/app.ts",
     "start": "node dist/app.js",
     "build": "rimraf dist && tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start:docker": "docker compose up",
+    "rebuild:docker": "docker compose up -d --no-deps --build backend" 
   },
   "author": "denver",
   "license": "ISC",

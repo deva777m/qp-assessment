@@ -8,6 +8,8 @@ const router = Router();
 router.use(jwtAuthenticate);
 router.use(adminOnly);
 
+router.get("/restore", handler.restore);
+
 router.get("/", handler.get);
 
 router.get("/:id", handler.getById);
@@ -17,7 +19,5 @@ router.post("/", handler.post);
 router.patch("/", handler.patch);
 
 router.delete("/", handler.delete);
-
-router.get("/restore/:id", handler.restore);
 
 export default router;
