@@ -1,3 +1,4 @@
 node_modules
 qp_assessment.postman_collection.json
 .env.sample
+.env

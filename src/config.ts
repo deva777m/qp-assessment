@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-dotenv.config({path: 'src/.env'});
+dotenv.config();
 
 export const dbConfig = {
     env: process.env.NODE_ENV,

@@ -7,10 +7,12 @@ services:
       - ./db-data:/var/lib/postgresql/data
       - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
     environment:
-      - POSTGRES_PASSWORD=qp-pass0
-      - POSTGRES_DB=postgres
-      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
       - POSTGRES_HOST_AUTH_METHOD=trust
+    env_file:
+      - .env
       
   backend:
     build:
@@ -19,6 +21,8 @@ services:
       target: dev
     ports:
       - 3000:3000
+    env_file:
+      - .env
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
