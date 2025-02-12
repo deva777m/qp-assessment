@@ -4,8 +4,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./db-data:/var/lib/postgresql/data
-      - ./pg_hba.conf:/var/lib/postgresql/data/pg_hba.conf
+      - pg_data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_DB=${DB_NAME}
@@ -29,3 +28,6 @@ services:
     depends_on:
       - db
     command: npm run dev
+
+volumes:
+  pg_data:
