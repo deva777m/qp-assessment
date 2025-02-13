@@ -1,3 +1,8 @@
-create .env from .env.sample
-run: npm run start:docker
-follow qp_assessment_postman_collection docs for api usage.
+steps to run the project:
+  - create .env from .env.sample
+  - navigate to project folder(qp-assessment)
+  - run -> npm run start:docker
+  - follow qp_assessment_postman_collection docs for api usage.
+
+create user with "admin" & "user" roles, using /user POST route. 
+access apis with token, which can be acquired by /login route for above users.
